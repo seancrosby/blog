@@ -2,10 +2,30 @@
 
 A blog website for Sean Crosby
 
+## Goals
+
+1. Build faith in Christ
+2. Make the blog a model for an online portfolio for students
+
 ## Entries to write:
 
 1. Goodbye keyboard, hello paper (what I've learned with code fluency check-ins)
 2. Fill the earth - how the acceleration found with AI may enable us to increase the population of the earth
    * Acceleration with AI: https://shumer.dev/something-big-is-happening
    * Major techological advances are required to support population - particularly in some areas (consider water issues in the west)
+3. My own sacred Grove (Hear Him)
+4. Alarm system
+5. Mailman detector
+6. Journal scanner
+7. Sprinkler controller
+8. Simulated operating system
+9. Favorite books (data intensive applications) 
+10. Favorite things about teaching at BYU-Idaho
+11. Joining LinkedIn - what I like, how to make it better? 
+12. The value of internships
+13. Building the blog software
+14. Coding with AI
+   
+
+
 
