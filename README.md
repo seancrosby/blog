@@ -25,7 +25,14 @@ A blog website for Sean Crosby
 12. The value of internships
 13. Building the blog software
 14. Coding with AI
+15. RSS Reader (first vibe coded project)
+16. Command-line only computer
    
+## TODO:
 
+1. Write unit tests
+2. Add handling for images
+3. Add AI summaries
+4. Add AI-based grammar check for entries
 
 
