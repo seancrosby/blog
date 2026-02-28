@@ -1,7 +1,9 @@
 import os
+import frontmatter
 import markdown
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
+from collections import defaultdict
 
 # Configuration
 CONTENT_DIR = 'content'
@@ -18,45 +20,79 @@ def generate_site():
     env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
     post_template = env.get_template('post.html')
     index_template = env.get_template('index.html')
+    tags_template = env.get_template('tags.html')
 
     posts = []
+    tags_map = defaultdict(list)
 
     # Process Markdown files
     for filename in os.listdir(CONTENT_DIR):
         if filename.endswith('.md'):
             filepath = os.path.join(CONTENT_DIR, filename)
-            with open(filepath, 'r', encoding='utf-8') as f:
-                text = f.read()
-                
-                # Simple frontmatter/content split (optional, but good for metadata)
-                # For now, we'll just use the first line as the title if it starts with #
-                html_content = markdown.markdown(text, extensions=['fenced_code', 'codehilite'])
-                
-                # Derive metadata
-                title = filename.replace('.md', '').replace('-', ' ').title()
-                date = datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d')
-                slug = filename.replace('.md', '.html')
+            post = frontmatter.load(filepath)
+            
+            # Extract metadata
+            date_val = post.get('date')
+            if isinstance(date_val, datetime):
+                date_str = date_val.strftime('%Y-%m-%d')
+            elif isinstance(date_val, str):
+                date_str = date_val
+            else:
+                date_str = datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d')
 
-                posts.append({
-                    'title': title,
-                    'date': date,
-                    'slug': slug,
-                    'content': html_content
-                })
+            title = post.get('title')
+            content_html = markdown.markdown(post.content, extensions=['fenced_code', 'codehilite'])
+            
+            if not title:
+                for line in post.content.split('\n'):
+                    if line.startswith('# '):
+                        title = line.replace('# ', '').strip()
+                        break
+                if not title:
+                    title = filename.replace('.md', '').replace('-', ' ').title()
 
-                # Render individual post
-                output_path = os.path.join(OUTPUT_DIR, slug)
-                with open(output_path, 'w', encoding='utf-8') as out_f:
-                    out_f.write(post_template.render(title=title, date=date, content=html_content))
+            # Handle Tags
+            tags = post.get('tags', [])
+            if isinstance(tags, str):
+                tags = [t.strip() for t in tags.split(',')]
+
+            slug = filename.replace('.md', '.html')
+
+            post_data = {
+                'title': title,
+                'date': date_str,
+                'slug': slug,
+                'content': content_html,
+                'tags': tags
+            }
+            posts.append(post_data)
+
+            # Map tags to posts
+            for tag in tags:
+                tags_map[tag].append(post_data)
+
+            # Render individual post
+            output_path = os.path.join(OUTPUT_DIR, slug)
+            with open(output_path, 'w', encoding='utf-8') as out_f:
+                out_f.write(post_template.render(title=title, date=date_str, content=content_html, tags=tags))
 
     # Sort posts by date (newest first)
     posts.sort(key=lambda x: x['date'], reverse=True)
+    
+    # Sort tags alphabetically and their posts by date
+    sorted_tags = sorted(tags_map.items())
+    for tag, tag_posts in sorted_tags:
+        tag_posts.sort(key=lambda x: x['date'], reverse=True)
 
     # Render index page
     with open(os.path.join(OUTPUT_DIR, 'index.html'), 'w', encoding='utf-8') as out_f:
         out_f.write(index_template.render(posts=posts))
 
-    print(f"Successfully generated {len(posts)} posts.")
+    # Render tags page
+    with open(os.path.join(OUTPUT_DIR, 'tags.html'), 'w', encoding='utf-8') as out_f:
+        out_f.write(tags_template.render(tags=sorted_tags))
+
+    print(f"Successfully generated {len(posts)} posts and {len(sorted_tags)} tags.")
 
 if __name__ == "__main__":
     generate_site()

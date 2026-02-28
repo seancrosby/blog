@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tags - Sean Crosby's Blog</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <a href="index.html">← Back to Home</a>
+        <h1>Blog Tags</h1>
+    </header>
+    <main>
+        {% for tag, posts in tags %}
+        <section class="tag-group">
+            <h2 id="{{ tag }}"># {{ tag }}</h2>
+            <ul class="post-list">
+                {% for post in posts %}
+                <li>
+                    <span class="post-date">{{ post.date }}</span>
+                    <a href="{{ post.slug }}">{{ post.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endfor %}
+    </main>
+</body>
+</html>

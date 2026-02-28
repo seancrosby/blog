@@ -8,11 +8,23 @@
 </head>
 <body>
     <header>
-        <a href="index.html">← Back to Home</a>
+        <nav>
+            <a href="index.html">← Back to Home</a> | 
+            <a href="tags.html">All Tags</a>
+        </nav>
     </header>
     <article>
         <h1>{{ title }}</h1>
-        <p class="meta">Published on {{ date }}</p>
+        <div class="meta">
+            <span>Published on {{ date }}</span>
+            {% if tags %}
+            <span class="post-tags">
+                {% for tag in tags %}
+                <a href="tags.html#{{ tag }}">#{{ tag }}</a>
+                {% endfor %}
+            </span>
+            {% endif %}
+        </div>
         <div class="content">
             {{ content }}
         </div>

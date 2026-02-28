@@ -13,8 +13,50 @@ header {
     margin-bottom: 40px;
 }
 
-h1 {
-    color: #222;
+nav {
+    margin-top: 10px;
+    padding-bottom: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #007bff;
+}
+
+.post-tags-mini {
+    margin-left: 10px;
+    font-size: 0.8em;
+}
+
+.post-tags-mini a {
+    color: #888;
+    text-decoration: none;
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+.post-tags {
+    margin-left: 15px;
+}
+
+.post-tags a {
+    color: #555;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.tag-group h2 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+    margin-top: 50px;
 }
 
 .post-list {
