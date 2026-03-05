@@ -1,6 +1,7 @@
 import os
 import frontmatter
 import markdown
+import re
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 from collections import defaultdict
@@ -10,6 +11,12 @@ CONTENT_DIR = 'content'
 TEMPLATE_DIR = 'templates'
 OUTPUT_DIR = 'public'
 ASSETS_DIR = 'assets'
+
+def handle_custom_tags(text):
+    # Support [youtube:VIDEO_ID]
+    youtube_pattern = r'\[youtube:([\w-]+)\]'
+    youtube_replacement = r'<div class="video-container"><iframe src="https://www.youtube.com/embed/\1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>'
+    return re.sub(youtube_pattern, youtube_replacement, text)
 
 def generate_site():
     # Ensure output directory exists
@@ -42,7 +49,10 @@ def generate_site():
                 date_str = datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d')
 
             title = post.get('title')
-            content_html = markdown.markdown(post.content, extensions=['fenced_code', 'codehilite'])
+            
+            # Process custom tags like [youtube:ID]
+            content = handle_custom_tags(post.content)
+            content_html = markdown.markdown(content, extensions=['fenced_code', 'codehilite'])
             
             if not title:
                 for line in post.content.split('\n'):

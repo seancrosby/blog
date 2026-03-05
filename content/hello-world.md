@@ -9,4 +9,9 @@ tags: [Personal, Welcome]
 This is my first blog post using my custom Python-based static site generator!
 
 ![A placeholder image](assets/images/placeholder.svg)
+
+## Video Support
+You can now embed YouTube videos using the `[youtube:VIDEO_ID]` syntax:
+
+[youtube:dQw4w9WgXcQ]
 ...
