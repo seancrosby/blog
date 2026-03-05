@@ -1,0 +1,13 @@
+# Generated static site
+public/
+
+# Python environment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# OS specific
+.DS_Store
+Thumbs.db

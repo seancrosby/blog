@@ -34,9 +34,6 @@ jobs:
       - name: Generate static files
         run: python scripts/generate.py
 
-      - name: Copy assets
-        run: cp -r assets public/
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -7,4 +7,6 @@ tags: [Personal, Welcome]
 # Hello World
 
 This is my first blog post using my custom Python-based static site generator!
+
+![A placeholder image](assets/images/placeholder.svg)
 ...

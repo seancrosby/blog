@@ -33,7 +33,8 @@ def generate_site():
             
             # Extract metadata
             date_val = post.get('date')
-            if isinstance(date_val, datetime):
+            from datetime import date
+            if isinstance(date_val, (datetime, date)):
                 date_str = date_val.strftime('%Y-%m-%d')
             elif isinstance(date_val, str):
                 date_str = date_val
@@ -91,6 +92,14 @@ def generate_site():
     # Render tags page
     with open(os.path.join(OUTPUT_DIR, 'tags.html'), 'w', encoding='utf-8') as out_f:
         out_f.write(tags_template.render(tags=sorted_tags))
+
+    # Copy assets to output directory
+    import shutil
+    if os.path.exists(ASSETS_DIR):
+        dest_assets = os.path.join(OUTPUT_DIR, ASSETS_DIR)
+        if os.path.exists(dest_assets):
+            shutil.rmtree(dest_assets)
+        shutil.copytree(ASSETS_DIR, dest_assets)
 
     print(f"Successfully generated {len(posts)} posts and {len(sorted_tags)} tags.")
 
