@@ -1,3 +1,5 @@
 markdown
 jinja2
 python-frontmatter
+pytest
+pytest-mock

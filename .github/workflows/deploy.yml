@@ -31,6 +31,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Run tests
+        run: PYTHONPATH=. pytest
+
       - name: Generate static files
         run: python scripts/generate.py
 

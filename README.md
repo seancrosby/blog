@@ -28,11 +28,21 @@ A blog website for Sean Crosby
 15. RSS Reader (first vibe coded project)
 16. Command-line only computer
    
+## Testing
+
+This project uses `pytest` for unit and integration testing.
+
+To run the tests:
+1. Ensure dependencies are installed: `pip install -r requirements.txt`
+2. Run the tests from the project root:
+   ```bash
+   PYTHONPATH=. pytest
+   ```
+
 ## TODO:
 
-1. Write unit tests
-2. Add handling for images
-3. Add AI summaries
-4. Add AI-based grammar check for entries
-
+1. Add handling for images
+2. Add AI summaries
+3. Add AI-based grammar check for entries
+4. Dark Mode
 
