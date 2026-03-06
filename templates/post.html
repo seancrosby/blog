@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} - Sean Crosby's Blog</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <a href="index.html">← Back to Home</a> | 
-            <a href="tags.html">All Tags</a>
-        </nav>
-    </header>
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - {% endblock %}
+
+{% block content %}
     <article>
         <h1>{{ title }}</h1>
         <div class="meta">
@@ -29,5 +19,4 @@
             {{ content }}
         </div>
     </article>
-</body>
-</html>
+{% endblock %}

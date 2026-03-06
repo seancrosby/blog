@@ -83,6 +83,7 @@ class SiteGenerator:
         post_template = self.env.get_template('post.html')
         index_template = self.env.get_template('index.html')
         tags_template = self.env.get_template('tags.html')
+        posts_template = self.env.get_template('posts.html')
 
         posts = []
         tags_map = defaultdict(list)
@@ -116,6 +117,9 @@ class SiteGenerator:
 
         with open(os.path.join(self.output_dir, 'tags.html'), 'w', encoding='utf-8') as out_f:
             out_f.write(tags_template.render(tags=sorted_tags))
+
+        with open(os.path.join(self.output_dir, 'posts.html'), 'w', encoding='utf-8') as out_f:
+            out_f.write(posts_template.render(posts=posts))
 
         # Copy assets to output directory if they exist and source != destination
         if os.path.exists(self.assets_dir):

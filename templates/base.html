@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}Sean Crosby</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% block extra_head %}{% endblock %}
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SRZNN9EXZD"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SRZNN9EXZD');
+</script>
+<body>
+    <header>
+        <a href="index.html" style="color: white; text-decoration: none;"><h1>Sean Crosby</h1></a>
+        <p class="subtitle">Teacher, Developer, Christian, Family Man</p>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/sean-crosby-dev" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/seancrosby" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="posts.html">Posts</a>
+            <a href="about.html">About</a>
+            <a href="tags.html">Tags</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
