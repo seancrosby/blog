@@ -60,6 +60,7 @@ class SiteGenerator:
         date_str = self.get_date_str(post, filepath)
         title = self.get_title(post, filename)
         tags = self.get_tags(post)
+        hide = post.get('hide', False)
         
         content = handle_custom_tags(post.content)
         content_html = markdown.markdown(content, extensions=['fenced_code', 'codehilite'])
@@ -71,7 +72,8 @@ class SiteGenerator:
             'date': date_str,
             'slug': slug,
             'content': content_html,
-            'tags': tags
+            'tags': tags,
+            'hide': hide
         }
 
     def generate(self):
@@ -88,10 +90,11 @@ class SiteGenerator:
         for filename in os.listdir(self.content_dir):
             if filename.endswith('.md'):
                 post_data = self.process_post(filename)
-                posts.append(post_data)
-
-                for tag in post_data['tags']:
-                    tags_map[tag].append(post_data)
+                
+                if not post_data['hide']:
+                    posts.append(post_data)
+                    for tag in post_data['tags']:
+                        tags_map[tag].append(post_data)
 
                 output_path = os.path.join(self.output_dir, post_data['slug'])
                 with open(output_path, 'w', encoding='utf-8') as out_f:

@@ -41,10 +41,9 @@ To run the tests:
 
 ## TODO:
 1. Add AI summaries
-2. Add AI-based grammar check for entries
-3. Dark Mode
-4. Add an about page that is created from a .md file
-5. Add a header that has a link to the about page and then back to the blog entries main page
-6. Add script for resizing images for optimal inclusion in a blog
-7. Add spelling and grammar check for blog posts
-
+1. Add AI-based grammar check for entries
+1. Dark Mode
+1. Add a header that has a link to the about page and then back to the blog entries main page
+1. Add script for resizing images for optimal inclusion in a blog
+1. Add spelling and grammar check for blog posts
+1. Add an image to the top of each blog post and a thumbnail of that image in index.html.  Also add an AI generated summary of the post below the blog post title.
