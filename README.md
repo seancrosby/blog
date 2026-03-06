@@ -45,4 +45,6 @@ To run the tests:
 3. Dark Mode
 4. Add an about page that is created from a .md file
 5. Add a header that has a link to the about page and then back to the blog entries main page
+6. Add script for resizing images for optimal inclusion in a blog
+7. Add spelling and grammar check for blog posts
 
