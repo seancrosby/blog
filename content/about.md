@@ -16,3 +16,6 @@ hide: true
 
 ## Purpose of This Blog
 This blog serves a dual purpose: it functions as a model for students building their own online portfolios and as a platform to share insights that help grow faith in Jesus Christ.
+
+## Other Links
+* [Graduate Student Website (UW-Madison)](https://pages.cs.wisc.edu/~smcrosby/)
