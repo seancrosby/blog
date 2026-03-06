@@ -40,9 +40,9 @@ To run the tests:
    ```
 
 ## TODO:
-
-1. Add handling for images
-2. Add AI summaries
-3. Add AI-based grammar check for entries
-4. Dark Mode
+1. Add AI summaries
+2. Add AI-based grammar check for entries
+3. Dark Mode
+4. Add an about page that is created from a .md file
+5. Add a header that has a link to the about page and then back to the blog entries main page
 
