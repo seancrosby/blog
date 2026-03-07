@@ -11,7 +11,7 @@ At BYU-Idaho, I encourage students to develop portfolios of their technical work
 I'm a dad, and finding time to write code on top of my other responsibilities has been difficult. As my personal, professional, and community responsibilities have grown, side projects have fallen by the wayside. If I could find a way to shorten the development cycle, then that could bring coding back into my life again.
 
 
-To achieve both of these objectives, I started building this blog framework with AI tools. I'm a command-line guy, and chose to start with Google's Gemini CLI. That first day, I was elated. I was no longer using AI to work with individual files in a chat window, but I was directing changes across multiple files; it felt more like doing a code review. My heart is with the terminal, and it was so great to have access to one of the greatest tools ever invented without having to do anything crazy to my Vim configuration. I am a happy man!
+To achieve all of these objectives, I started building this blog framework with AI tools. I'm a command-line guy, and chose to start with Google's Gemini CLI. That first day, I was elated. I was no longer using AI to work with individual files in a chat window, but I was directing changes across multiple files; it felt more like doing a code review. My heart is with the terminal, and it was so great to have access to one of the greatest tools ever invented without having to do anything crazy to my Vim configuration. I am a happy man!
 
 ![Gemini CLI in Terminal](assets/images/gemini-cli.png)
 
