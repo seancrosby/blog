@@ -1,49 +1,102 @@
-# blog
+# Sean Crosby's Blog
 
-A blog website for Sean Crosby
+A bespoke static blog engine that transforms Markdown content into a clean, modern website hosted on GitHub Pages.
 
-## Goals
+## Core Goals
+1. Share insights that build faith in Christ.
+2. Serve as a model for student online portfolios.
 
-1. Build faith in Christ
-2. Make the blog a model for an online portfolio for students
+---
 
-## Entries to write:
+## 🛠 Prerequisites & Installation
 
-1. Goodbye keyboard, hello paper (what I've learned with code fluency check-ins)
-2. Fill the earth - how the acceleration found with AI may enable us to increase the population of the earth
-   * Acceleration with AI: https://shumer.dev/something-big-is-happening
-   * Major techological advances are required to support population - particularly in some areas (consider water issues in the west)
-3. My own sacred Grove (Hear Him)
-4. Alarm system
-5. Mailman detector
-6. Journal scanner
-7. Sprinkler controller
-8. Simulated operating system
-9. Favorite books (data intensive applications) 
-10. Favorite things about teaching at BYU-Idaho
-11. Joining LinkedIn - what I like, how to make it better? 
-12. The value of internships
-13. Building the blog software
-14. Coding with AI
-15. RSS Reader (first vibe coded project)
-16. Command-line only computer
-   
-## Testing
+### 1. Python Environment
+This project requires Python 3.x and several libraries.
+```bash
+# Clone the repository
+git clone https://github.com/seancrosby/blog.git
+cd blog
 
-This project uses `pytest` for unit and integration testing.
+# Install dependencies
+pip install -r requirements.txt
+```
 
-To run the tests:
-1. Ensure dependencies are installed: `pip install -r requirements.txt`
-2. Run the tests from the project root:
-   ```bash
-   PYTHONPATH=. pytest
-   ```
+### 2. AI Spell & Grammar Checking (Optional)
+To use the AI-assisted editing features, you'll need [Ollama](https://ollama.com/) installed and running locally with the `llama3` model.
+```bash
+# Pull the default model
+ollama pull llama3
+```
 
-## TODO:
-1. Add AI summaries
-1. Add AI-based grammar check for entries
-1. Dark Mode
-1. Add a header that has a link to the about page and then back to the blog entries main page
-1. Add script for resizing images for optimal inclusion in a blog
-1. Add spelling and grammar check for blog posts
-1. Add an image to the top of each blog post and a thumbnail of that image in index.html.  Also add an AI generated summary of the post below the blog post title.
+---
+
+## 📝 Creating Content
+
+### 1. Create a New Post
+Add a new `.md` file to the `content/` directory. Each file should include frontmatter for metadata:
+
+```markdown
+---
+title: My New Blog Post
+date: 2026-03-06
+tags: reflection, tech
+---
+
+# Your Content Here
+This is a standard markdown post.
+```
+
+### 2. Custom Syntax
+- **YouTube Embeds:** Use `[youtube:VIDEO_ID]` (e.g., `[youtube:dQw4w9WgXcQ]`).
+- **Images:** Place images in `assets/images/` and reference them: `![Description](../assets/images/your-image.jpg)`.
+
+### 3. AI Spellcheck & Grammar Review
+Run the AI editor to review your post before publishing:
+```bash
+python scripts/check_md.py content/my-post.md
+```
+This script uses Ollama to generate suggestions and opens them in a `vimdiff` view for your review.
+
+---
+
+## 🚀 Generating & Previewing
+
+To generate the static HTML files in the `public/` directory:
+```bash
+python scripts/generate.py
+```
+
+To preview the site locally, you can use Python's built-in server:
+```bash
+cd public
+python -m http.server 8000
+```
+Then visit `http://localhost:8000` in your browser.
+
+---
+
+## 🧪 Testing
+
+We use `pytest` for unit and integration tests.
+```bash
+# Run all tests
+PYTHONPATH=. pytest
+```
+
+---
+
+## 🤖 GitHub Actions & Deployment
+
+The blog is automatically built and deployed via GitHub Actions whenever changes are pushed to the `main` branch.
+
+**Workflow Path:** `.github/workflows/deploy.yml`
+1. **Build Job:** Installs dependencies, runs tests, and generates the `public/` folder.
+2. **Deploy Job:** Uploads the `public/` artifact and deploys it to GitHub Pages.
+
+---
+
+## ✅ TODO
+- [ ] Add AI-generated summaries for each post.
+- [ ] Implement Dark Mode.
+- [ ] Create an image optimization/resizing script.
+- [ ] Add featured images and thumbnails to the homepage.
