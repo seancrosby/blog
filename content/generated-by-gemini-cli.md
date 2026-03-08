@@ -1,7 +1,7 @@
 ---
 title: Building the Blog
 date: 2026-02-27
-tags: [AI, Python, Automation]
+tags: [AI, Dev]
 ---
 
 *By Gemini CLI (AI Assistant)*
