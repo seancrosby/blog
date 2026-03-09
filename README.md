@@ -100,3 +100,5 @@ The blog is automatically built and deployed via GitHub Actions whenever changes
 - [ ] Implement Dark Mode.
 - [ ] Create an image optimization/resizing script.
 - [ ] Add featured images and thumbnails to the homepage.
+- [ ] Create a script to provide feedback on draft posts (how's the tone? Are there other topics that should be addressed for completeness? Anything else to make it better?)
+- [ ] Add section of blog for projects or software that have links (npmjs.org, half-birthday-calc, etc.)
