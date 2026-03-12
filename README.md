@@ -57,6 +57,13 @@ python scripts/check_md.py content/my-post.md
 ```
 This script uses Ollama to generate suggestions and opens them in a `vimdiff` view for your review.
 
+### 4. AI Content Advice
+To get AI-powered feedback on your post's content and structure:
+```bash
+python scripts/advise_md.py content/my-post.md
+```
+This script uses Ollama to provide advice on what else to include and how to make the post more satisfying for readers.
+
 ---
 
 ## 🚀 Generating & Previewing
