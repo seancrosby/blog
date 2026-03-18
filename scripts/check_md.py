@@ -2,6 +2,7 @@ import os
 import sys
 import tempfile
 import subprocess
+import shutil
 import ollama
 
 def check_markdown(file_path, model="llama3"):
@@ -35,7 +36,6 @@ def check_markdown(file_path, model="llama3"):
         return
 
     # Create a temporary file for the corrected suggestions
-    # delete=False because we need it to persist until Vim closes
     with tempfile.NamedTemporaryFile(suffix=".md", delete=False, mode='w', encoding='utf-8') as temp_f:
         temp_f.write(corrected_content)
         temp_file_path = temp_f.name
@@ -51,22 +51,34 @@ def check_markdown(file_path, model="llama3"):
 
     input("\nPress Enter to open vimdiff...")
 
+    editor_success = False
     try:
-        # Open both files in Vim diff mode for highlighting
+        # Try vimdiff first
         subprocess.run(['vimdiff', '-c', 'windo set wrap', file_path, temp_file_path], check=True)
-    except subprocess.CalledProcessError:
-        print("Vim closed with an error.")
+        editor_success = True
     except FileNotFoundError:
         # Fallback to vim -d if vimdiff command is not directly available
         try:
             subprocess.run(['vim', '-d', file_path, temp_file_path], check=True)
+            editor_success = True
         except Exception as e:
             print(f"Error: Could not start vim in diff mode. {e}")
-    finally:
-        # Clean up the temporary file immediately after Vim exits
-        if os.path.exists(temp_file_path):
-            os.remove(temp_file_path)
-            print(f"\nTemporary suggestions file removed.")
+    except subprocess.CalledProcessError:
+        print("Vim closed with an error.")
+
+    if editor_success:
+        print("\nReview complete.")
+        choice = input(f"Would you like to overwrite '{file_path}' with the suggestions? (y/N): ").strip().lower()
+        if choice == 'y':
+            shutil.copy2(temp_file_path, file_path)
+            print(f"Success: '{file_path}' has been updated with suggestions.")
+        else:
+            print("No changes applied to the original file.")
+
+    # Clean up the temporary file
+    if os.path.exists(temp_file_path):
+        os.remove(temp_file_path)
+        print(f"\nTemporary suggestions file removed.")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
