@@ -3,6 +3,22 @@ import sys
 import ollama
 import frontmatter
 
+def generate_advice(content, model="llama3"):
+    """
+    Calls Ollama to get advice on the blog post content.
+    """
+    prompt = (
+        "You are an expert blog editor and writing coach. I will provide you with the content of a blog post. "
+        "Please analyze it and provide constructive feedback on the following:\n"
+        "1. What else should be included to make the post more comprehensive or engaging?\n"
+        "2. Does the post feel complete? Are there any logical gaps or unanswered questions?\n"
+        "3. Would this post be satisfying or effective for a blog reader? Consider the tone, structure, and value provided.\n\n"
+        "Please be specific and provide actionable advice. Keep your response concise but thorough.\n\n"
+        f"Blog Post Content:\n{content}"
+    )
+    response = ollama.generate(model=model, prompt=prompt)
+    return response['response'].strip()
+
 def advise_markdown(file_path, model="llama3"):
     """
     Uses Ollama to provide advice on a markdown blog post's content.
@@ -29,21 +45,9 @@ def advise_markdown(file_path, model="llama3"):
 
     print(f"Analyzing '{title}' with {model} via Ollama...")
 
-    # Construct the prompt for Ollama
-    prompt = (
-        "You are an expert blog editor and writing coach. I will provide you with the content of a blog post. "
-        "Please analyze it and provide constructive feedback on the following:\n"
-        "1. What else should be included to make the post more comprehensive or engaging?\n"
-        "2. Does the post feel complete? Are there any logical gaps or unanswered questions?\n"
-        "3. Would this post be satisfying or effective for a blog reader? Consider the tone, structure, and value provided.\n\n"
-        "Please be specific and provide actionable advice. Keep your response concise but thorough.\n\n"
-        f"Blog Post Content:\n{content}"
-    )
-
     try:
         # Call Ollama
-        response = ollama.generate(model=model, prompt=prompt)
-        advice = response['response'].strip()
+        advice = generate_advice(content, model)
         
         print("\n" + "="*40)
         print(f"ADVICE FOR: {title}")

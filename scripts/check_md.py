@@ -5,6 +5,39 @@ import subprocess
 import shutil
 import ollama
 
+def generate_correction(content, model="llama3"):
+    """
+    Calls Ollama to get corrected markdown content.
+    """
+    prompt = (
+        "You are an expert editor. Please spell and grammar check the following markdown content. "
+        "Return the full corrected content. Maintain all markdown formatting, including frontmatter. "
+        "Do not provide any preamble or commentary, just the corrected markdown text.\n\n"
+        f"Content:\n{content}"
+    )
+    response = ollama.generate(model=model, prompt=prompt)
+    return response['response'].strip()
+
+def launch_editor(file_path, temp_file_path):
+    """
+    Launches vimdiff or vim -d to compare the original and corrected files.
+    """
+    try:
+        # Try vimdiff first
+        subprocess.run(['vimdiff', '-c', 'windo set wrap', file_path, temp_file_path], check=True)
+        return True
+    except FileNotFoundError:
+        # Fallback to vim -d if vimdiff command is not directly available
+        try:
+            subprocess.run(['vim', '-d', file_path, temp_file_path], check=True)
+            return True
+        except Exception as e:
+            print(f"Error: Could not start vim in diff mode. {e}")
+            return False
+    except subprocess.CalledProcessError:
+        print("Vim closed with an error.")
+        return False
+
 def check_markdown(file_path, model="llama3"):
     """
     Spell and grammar checks a markdown file using Ollama and opens suggestions in Vim side-by-side.
@@ -14,23 +47,17 @@ def check_markdown(file_path, model="llama3"):
         return
 
     # Read the original content
-    with open(file_path, 'r', encoding='utf-8') as f:
-        content = f.read()
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except Exception as e:
+        print(f"Error reading file: {e}")
+        return
 
     print(f"Analyzing '{file_path}' with {model} via Ollama...")
 
-    # Construct the prompt for Ollama
-    prompt = (
-        "You are an expert editor. Please spell and grammar check the following markdown content. "
-        "Return the full corrected content. Maintain all markdown formatting, including frontmatter. "
-        "Do not provide any preamble or commentary, just the corrected markdown text.\n\n"
-        f"Content:\n{content}"
-    )
-
     try:
-        # Call Ollama
-        response = ollama.generate(model=model, prompt=prompt)
-        corrected_content = response['response'].strip()
+        corrected_content = generate_correction(content, model)
     except Exception as e:
         print(f"Error calling Ollama: {e}")
         return
@@ -51,20 +78,7 @@ def check_markdown(file_path, model="llama3"):
 
     input("\nPress Enter to open vimdiff...")
 
-    editor_success = False
-    try:
-        # Try vimdiff first
-        subprocess.run(['vimdiff', '-c', 'windo set wrap', file_path, temp_file_path], check=True)
-        editor_success = True
-    except FileNotFoundError:
-        # Fallback to vim -d if vimdiff command is not directly available
-        try:
-            subprocess.run(['vim', '-d', file_path, temp_file_path], check=True)
-            editor_success = True
-        except Exception as e:
-            print(f"Error: Could not start vim in diff mode. {e}")
-    except subprocess.CalledProcessError:
-        print("Vim closed with an error.")
+    editor_success = launch_editor(file_path, temp_file_path)
 
     if editor_success:
         print("\nReview complete.")
