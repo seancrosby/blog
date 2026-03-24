@@ -1,7 +1,12 @@
 ---
-title: About Sean
 date: 2026-03-05
 hide: true
+summary: As I venture beyond my life as a computer science professor, I'm excited
+  to share my passions and experiences with you through this blog - from exploring
+  the great outdoors to reflecting on faith in Jesus Christ. Whether you're looking
+  for inspiration or just want to get to know me better, join me on this journey of
+  self-discovery and exploration!
+title: About Sean
 ---
 
 <div class="profile-section">

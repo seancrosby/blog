@@ -3,6 +3,7 @@ import frontmatter
 import markdown
 import re
 import shutil
+import bleach
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime, date
 from collections import defaultdict
@@ -12,6 +13,10 @@ CONTENT_DIR = 'content'
 TEMPLATE_DIR = 'templates'
 OUTPUT_DIR = 'public'
 ASSETS_DIR = 'assets'
+
+# Allowed HTML tags for AI summaries
+ALLOWED_SUMMARY_TAGS = ['p', 'b', 'i', 'strong', 'em', 'a', 'br']
+ALLOWED_SUMMARY_ATTRS = {'a': ['href', 'title']}
 
 def handle_custom_tags(text):
     # Support [youtube:VIDEO_ID]
@@ -62,6 +67,19 @@ class SiteGenerator:
         tags = self.get_tags(post)
         hide = post.get('hide', False)
         
+        summary = post.get('summary', '')
+        summary_html = None
+        if summary:
+            # Convert markdown to HTML first
+            raw_summary_html = markdown.markdown(summary)
+            # Sanitize the result since it comes from AI
+            summary_html = bleach.clean(
+                raw_summary_html, 
+                tags=ALLOWED_SUMMARY_TAGS, 
+                attributes=ALLOWED_SUMMARY_ATTRS, 
+                strip=True
+            )
+        
         content = handle_custom_tags(post.content)
         content_html = markdown.markdown(content, extensions=['fenced_code', 'codehilite'])
         
@@ -71,6 +89,7 @@ class SiteGenerator:
             'title': title,
             'date': date_str,
             'slug': slug,
+            'summary': summary_html,
             'content': content_html,
             'tags': tags,
             'hide': hide

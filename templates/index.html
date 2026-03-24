@@ -15,7 +15,12 @@
             {% endif %}
         </div>
         <div class="content">
-            {{ post.content }}
+            {% if post.summary %}
+                {{ post.summary }}
+                <p><a href="{{ post.slug }}">Read more...</a></p>
+            {% else %}
+                {{ post.content }}
+            {% endif %}
         </div>
         <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
     </article>

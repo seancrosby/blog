@@ -4,3 +4,4 @@ python-frontmatter
 pytest
 pytest-mock
 ollama
+bleach

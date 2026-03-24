@@ -1,7 +1,14 @@
 ---
-title: Starting with AI Tools
 date: 2026-03-06
-tags: [Dev]
+summary: 'As I returned from paternal leave, I realized I''d fallen behind the curve on AI
+  coding tools. To catch up and build my own portfolio, I started building this blog
+  using Google''s Gemini CLI, leveraging my existing skills while gaining efficiency
+  gains. It''s been a wild ride, with unexpected features like embedded YouTube videos
+  (including an AI-generated Rickroll!) - join me as I explore the possibilities of
+  AI-powered development!'
+tags:
+- Dev
+title: Starting with AI Tools
 ---
 
 Last fall, I took paternal leave. When I left, AI for software development still felt like a toy. However, when I returned, the world had changed and the AI coding tools were ready for production. I realized I was behind the times and had to catch up.
@@ -31,4 +38,3 @@ Using AI tools has leveraged my existing skills (code design and review) while a
 On a humorous note, when I asked Gemini CLI to add support for embedded YouTube videos, the video it added to my "hello world" post was Rick Astley's "Never Gonna Give You Up." AI Rickrolled me!
 
 ![Rickroll](assets/images/never.png)
-
