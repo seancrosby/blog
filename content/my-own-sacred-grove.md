@@ -1,10 +1,12 @@
 ---
+author: Sean
 date: 2026-03-07
-summary: '"I had a life-changing experience at the Sacred Grove in upstate New York, where
-  Joseph Smith received his vision of the Father and Son. Years later, my children
-  learned a song that echoed what I learned that day: we all need a sacred space to
-  connect with God. Join me as I share my personal journey and discover how this powerful
-  place has impacted my life."'
+summary: Sean recounts a personal experience that connects him to the sacred history
+  of the Church of Jesus Christ of Latter-day Saints, recalling the pivotal moment
+  when 14-year-old Joseph Smith prayed in a grove to determine which church was true.
+  Sean shares how his own visit to the Sacred Grove led to an unexpected revelation
+  that has deeply influenced his life, and he reflects on the significance of having
+  a personal space for spiritual connection and growth.
 tags:
 - Faith
 title: My Own Sacred Grove

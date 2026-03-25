@@ -5,19 +5,46 @@ import frontmatter
 
 CONTENT_DIR = 'content'
 
-def generate_summary(content, model="llama3"):
+def generate_summary(content, author="Sean", model="llama3"):
     """
     Calls Ollama to generate a concise summary of the blog post content.
     """
     prompt = (
-        "You are an expert blog editor. I will provide you with the content of my blog post. "
-        "Please provide a concise, engaging summary of the post in 2-3 sentences, written in the first person (using 'I', 'me', 'my'). "
+        f"You are an expert blog editor. I will provide you with the content of a blog post written by {author}. "
+        f"Please provide a concise, interesting, and engaging summary of the post in 2-3 sentences. "
+        f"The summary MUST be written in the third person, referring to the author as '{author}'. "
+        "The tone should be professional and informative, avoiding excessive hype or 'peppy' language. "
         "The summary should be suitable for a blog homepage to entice readers to click through. "
-        "Return ONLY the summary text, nothing else.\n\n"
+        "IMPORTANT: Return ONLY the summary text itself. Do not include any introductory phrases (like 'Here is a summary'), "
+        "do not use quotes to wrap the entire summary, and do not include any other conversational filler.\n\n"
         f"Blog Post Content:\n{content}"
     )
     response = ollama.generate(model=model, prompt=prompt)
-    return response['response'].strip()
+    summary = response['response'].strip()
+    
+    # Post-processing to remove common AI artifacts
+    # Remove leading/trailing quotes (both single and double)
+    if (summary.startswith('"') and summary.endswith('"')) or (summary.startswith("'") and summary.endswith("'")):
+        summary = summary[1:-1].strip()
+        
+    # Remove common AI headers if they still appear
+    headers_to_remove = [
+        "Here is a concise and engaging summary of the blog post:",
+        "Here is a concise, interesting, and engaging summary of the post:",
+        "Here is a concise, interesting, and engaging summary of the blog post:",
+        "Here is a summary of the blog post:",
+        "Here is a summary of the post:",
+        "Summary:",
+        "Here's a summary:",
+    ]
+    for header in headers_to_remove:
+        if summary.lower().startswith(header.lower()):
+            summary = summary[len(header):].strip()
+            # If after stripping the header there are quotes, strip them too
+            if (summary.startswith('"') and summary.endswith('"')) or (summary.startswith("'") and summary.endswith("'")):
+                summary = summary[1:-1].strip()
+            
+    return summary
 
 def summarize_markdown(file_path, model="llama3", overwrite=False):
     """
@@ -40,8 +67,9 @@ def summarize_markdown(file_path, model="llama3", overwrite=False):
                 # Explicitly delete the current summary as requested
                 del post.metadata['summary']
 
-        print(f"Summarizing '{file_path}' with {model}...")
-        summary = generate_summary(post.content, model)
+        author = post.metadata.get('author', 'Sean')
+        print(f"Summarizing '{file_path}' (Author: {author}) with {model}...")
+        summary = generate_summary(post.content, author, model)
         
         # Update front matter
         post.metadata['summary'] = summary

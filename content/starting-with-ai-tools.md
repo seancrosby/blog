@@ -1,11 +1,11 @@
 ---
+author: Sean
 date: 2026-03-06
-summary: 'As I returned from paternal leave, I realized I''d fallen behind the curve on AI
-  coding tools. To catch up and build my own portfolio, I started building this blog
-  using Google''s Gemini CLI, leveraging my existing skills while gaining efficiency
-  gains. It''s been a wild ride, with unexpected features like embedded YouTube videos
-  (including an AI-generated Rickroll!) - join me as I explore the possibilities of
-  AI-powered development!'
+summary: Sean shares his personal journey in leveraging AI tools for software development,
+  reflecting on how his experience with Google's Gemini CLI has revolutionized his
+  approach to coding. After taking paternal leave, Sean found himself behind the times
+  and decided to create this blog as a portfolio project, using AI tools to streamline
+  the process and build an MVP.
 tags:
 - Dev
 title: Starting with AI Tools
