@@ -1,5 +1,5 @@
 import os
-import sys
+import argparse
 import ollama
 import frontmatter
 
@@ -19,7 +19,7 @@ def generate_summary(content, model="llama3"):
     response = ollama.generate(model=model, prompt=prompt)
     return response['response'].strip()
 
-def summarize_markdown(file_path, model="llama3", force=False):
+def summarize_markdown(file_path, model="llama3", overwrite=False):
     """
     Uses Ollama to generate a summary for a markdown blog post and updates its front matter.
     """
@@ -30,10 +30,15 @@ def summarize_markdown(file_path, model="llama3", force=False):
     try:
         post = frontmatter.load(file_path)
         
-        # Skip if summary already exists and not forcing regeneration
-        if 'summary' in post.metadata and not force:
-            print(f"Skipping '{file_path}': Summary already exists.")
-            return
+        # Check if summary already exists
+        if 'summary' in post.metadata:
+            if not overwrite:
+                print(f"Skipping '{file_path}': Summary already exists.")
+                return
+            else:
+                print(f"Overwriting summary for '{file_path}'...")
+                # Explicitly delete the current summary as requested
+                del post.metadata['summary']
 
         print(f"Summarizing '{file_path}' with {model}...")
         summary = generate_summary(post.content, model)
@@ -50,22 +55,23 @@ def summarize_markdown(file_path, model="llama3", force=False):
     except Exception as e:
         print(f"Error processing '{file_path}': {e}")
 
-def summarize_all(model="llama3", force=False):
+def summarize_all(model="llama3", overwrite=False):
     """
     Iterates through all markdown files in the content directory and generates summaries.
     """
+    if not os.path.exists(CONTENT_DIR):
+        print(f"Error: Content directory '{CONTENT_DIR}' not found.")
+        return
+
     for filename in os.listdir(CONTENT_DIR):
         if filename.endswith('.md'):
             filepath = os.path.join(CONTENT_DIR, filename)
-            summarize_markdown(filepath, model, force)
+            summarize_markdown(filepath, model, overwrite)
 
 if __name__ == "__main__":
-    force_update = "--force" in sys.argv
-    model_name = "llama3"
+    parser = argparse.ArgumentParser(description="Generate AI summaries for blog posts.")
+    parser.add_argument("model", nargs="?", default="llama3", help="The Ollama model to use (default: llama3).")
+    parser.add_argument("--overwrite", "-f", "--force", action="store_true", help="Overwrite existing summaries. Deletes the current summary before generating a new one.")
     
-    # Check if a model name was provided (excluding the --force flag)
-    args = [a for a in sys.argv[1:] if a != "--force"]
-    if args:
-        model_name = args[0]
-        
-    summarize_all(model_name, force_update)
+    args = parser.parse_args()
+    summarize_all(args.model, args.overwrite)

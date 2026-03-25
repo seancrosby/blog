@@ -1,4 +1,5 @@
 import os
+import argparse
 import frontmatter
 import markdown
 import re
@@ -8,7 +9,7 @@ from jinja2 import Environment, FileSystemLoader
 from datetime import datetime, date
 from collections import defaultdict
 
-# Configuration
+# Defaults
 CONTENT_DIR = 'content'
 TEMPLATE_DIR = 'templates'
 OUTPUT_DIR = 'public'
@@ -154,9 +155,19 @@ class SiteGenerator:
         print(f"Successfully generated {len(posts)} posts and {len(sorted_tags)} tags.")
         return posts, sorted_tags
 
-def generate_site():
-    generator = SiteGenerator()
-    generator.generate()
-
 if __name__ == "__main__":
-    generate_site()
+    parser = argparse.ArgumentParser(description="Static site generator for the blog.")
+    parser.add_argument("--content", default=CONTENT_DIR, help=f"Directory containing markdown content (default: {CONTENT_DIR})")
+    parser.add_argument("--templates", default=TEMPLATE_DIR, help=f"Directory containing HTML templates (default: {TEMPLATE_DIR})")
+    parser.add_argument("--output", default=OUTPUT_DIR, help=f"Directory to output the generated site (default: {OUTPUT_DIR})")
+    parser.add_argument("--assets", default=ASSETS_DIR, help=f"Directory containing static assets (default: {ASSETS_DIR})")
+    
+    args = parser.parse_args()
+    
+    generator = SiteGenerator(
+        content_dir=args.content,
+        template_dir=args.templates,
+        output_dir=args.output,
+        assets_dir=args.assets
+    )
+    generator.generate()

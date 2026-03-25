@@ -1,5 +1,5 @@
 import os
-import sys
+import argparse
 import tempfile
 import subprocess
 import shutil
@@ -95,12 +95,9 @@ def check_markdown(file_path, model="llama3"):
         print(f"\nTemporary suggestions file removed.")
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python scripts/check_md.py <file.md> [model_name]")
-        print("Default model is 'llama3'.")
-        sys.exit(1)
-
-    input_file = sys.argv[1]
-    model_name = sys.argv[2] if len(sys.argv) > 2 else "llama3"
+    parser = argparse.ArgumentParser(description="Spell and grammar check a markdown file using AI and review via Vim.")
+    parser.add_argument("file", help="The markdown file to check.")
+    parser.add_argument("model", nargs="?", default="llama3", help="The Ollama model to use (default: llama3).")
     
-    check_markdown(input_file, model_name)
+    args = parser.parse_args()
+    check_markdown(args.file, args.model)
