@@ -20,6 +20,11 @@ My homegrown command-line wrapper for Google's Gemini.  This allowed me to use A
 
 *   **GitHub Repository:** [gemini-cli](https://github.com/seancrosby/gemini-cli.git)
 
+## [Blog Website](https://github.com/seancrosby/blog.git)
+A custom-built static blog website that transforms Markdown content into a modern, clean interface. It's built using React and features Ollama-based scripts for automated spell checking, grammar review, and intelligent post summarization.
+
+*   **GitHub Repository:** [blog](https://github.com/seancrosby/blog.git)
+
 ## [QR Code Generator](https://seancrosby.github.io/qr-code)
 A fast and easy-to-use QR code generator. Input any URL or text and instantly create a QR code that you can download or share.
 
