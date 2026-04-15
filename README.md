@@ -103,9 +103,7 @@ The blog is automatically built and deployed via GitHub Actions whenever changes
 ---
 
 ## ✅ TODO
-- [ ] Add AI-generated summaries for each post.
 - [ ] Implement Dark Mode/improved UI
-- [ ] Create an image optimization/resizing script.
 - [ ] Add featured images and thumbnails to the homepage.
 - [ ] Add image to top of blog
 - [ ] Update projects page to have the projects look like tiles
